@@ -5,7 +5,7 @@ import { compactDecrypt } from "jose";
  * Vercel Node API route
  * - Handles Meta Flow endpoint handshake (challenge)
  * - Decrypts encrypted Flow payloads (JWE) with your private key (FLOW_PRIVATE_PEM)
- * - Forwards the decrypted (or original) payload to your Make webhook (MAKE_WEBHOOK_URL)
+ * - Forwards the decrypted (or original) payload to your Power Automate webhook (https://default8851c2c5fa204fdc88d7995c154473.aa.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fd077defbc3c43b6ae39408351756b3a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fi0A1BDxbO1EF7YP9KZhaqW2AUk0420xGpmWEF6JoSs)
  */
 const ok = (res, body = null) => {
   if (body === null) return res.status(200).end();
@@ -53,16 +53,16 @@ export default async function handler(req, res) {
       }
     }
 
-    // C) Forward to Make (optional)
-    if (process.env.MAKE_WEBHOOK_URL) {
+    // C) Forward to Power Automate (optional)
+    if (process.env.https://default8851c2c5fa204fdc88d7995c154473.aa.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fd077defbc3c43b6ae39408351756b3a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fi0A1BDxbO1EF7YP9KZhaqW2AUk0420xGpmWEF6JoSs) {
       try {
-        await fetch(process.env.MAKE_WEBHOOK_URL, {
+        await fetch(process.env.https://default8851c2c5fa204fdc88d7995c154473.aa.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/fd077defbc3c43b6ae39408351756b3a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fi0A1BDxbO1EF7YP9KZhaqW2AUk0420xGpmWEF6JoSs, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(decrypted || body)
         });
       } catch (e) {
-        console.error("Forward to Make failed:", e?.message || e);
+        console.error("Forward to Power Automate failed:", e?.message || e);
       }
     }
 
